@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grumpy Monkey's Coffee Nook</title>
+<meta name="description" content="Neighbourhood coffee nook on Hume Street, Norman Park, Brisbane. Open from 5am weekdays and 6am weekends, with a free homebaked brownie with every coffee.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0d0d0c;
+  --white: #ffffff;
+  --beige: #ece3d4;
+  --beige-soft: #f6f1e9;
+  --beige-deep: #d6c7ae;
+  --ink-muted: #5c544a;
+  --line: #d9cfbf;
+  --line-dark: #2b2a27;
+  --on-dark-muted: #b9b0a2;
+  --open: #1f7a4a;
+
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1180px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--beige-soft); color: var(--black);
+  font: 16px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+svg { display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.05; margin: 0; letter-spacing: -.01em; }
+h1 em, h2 em, h3 em { font-style: italic; }
+p, blockquote, figure { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-muted); }
+.on-dark .eyebrow { color: var(--on-dark-muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--black); color: var(--white); padding: 12px 16px; text-decoration: none; }
+.skip:focus { top: 16px; }
+:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
+.on-dark :focus-visible { outline-color: var(--beige); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 26px;
+  font: 500 15px/1 var(--font-body); text-decoration: none; border: 1px solid var(--black); border-radius: 2px; cursor: pointer;
+  transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.btn svg { width: 16px; height: 16px; transition: transform .2s var(--ease); }
+.btn:hover svg { transform: translateX(3px); }
+.btn-solid { background: var(--black); color: var(--white); }
+.btn-solid:hover { background: transparent; color: var(--black); }
+.btn-ghost { background: transparent; color: var(--black); }
+.btn-ghost:hover { background: var(--black); color: var(--white); }
+.on-dark .btn-solid { background: var(--beige); color: var(--black); border-color: var(--beige); }
+.on-dark .btn-solid:hover { background: transparent; color: var(--beige); }
+.on-dark .btn-ghost { color: var(--white); border-color: var(--line-dark); }
+.on-dark .btn-ghost:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+
+/* Header */
+.site-header {
+  position: sticky; top: 0; z-index: 50; border-bottom: 1px solid transparent;
+  background: color-mix(in srgb, var(--beige-soft) 92%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transition: border-color .2s var(--ease);
+}
+.site-header.scrolled { border-bottom-color: var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
+.logo { font-family: var(--font-display); font-size: 21px; text-decoration: none; white-space: nowrap; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 14px; text-decoration: none; padding: 12px 0; position: relative; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.nav-cta { min-height: 42px; padding: 0 18px; font-size: 14px; }
+.menu-toggle { display: none; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; padding: 0; align-items: center; justify-content: center; }
+.menu-toggle span, .menu-toggle span::before, .menu-toggle span::after { display: block; width: 22px; height: 1.5px; background: var(--black); position: relative; transition: transform .25s var(--ease), background-color .2s; }
+.menu-toggle span::before, .menu-toggle span::after { content: ""; position: absolute; left: 0; }
+.menu-toggle span::before { top: -7px; }
+.menu-toggle span::after { top: 7px; }
+.menu-toggle[aria-expanded="true"] span { background: transparent; }
+.menu-toggle[aria-expanded="true"] span::before { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span::after { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 860px) {
+  .menu-toggle { display: inline-flex; }
+  .nav-cta { display: none; }
+  .nav-links {
+    position: fixed; inset: 72px 0 auto 0; flex-direction: column; gap: 0; background: var(--beige-soft);
+    border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 24px;
+    transform: translateY(-8px); opacity: 0; visibility: hidden; transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+  }
+  .nav-links.open { transform: none; opacity: 1; visibility: visible; }
+  .nav-links a { font-family: var(--font-display); font-size: 26px; border-bottom: 1px solid var(--line); }
+  .nav-links a::after { display: none; }
+}
+
+/* Hero */
+.hero { padding: clamp(56px, 10vw, 128px) 0 clamp(56px, 8vw, 96px); }
+.hero-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: end; }
+.hero h1 { font-size: clamp(52px, 10vw, 136px); line-height: .94; letter-spacing: -.03em; margin-top: 20px; }
+.hero-side { display: grid; gap: 28px; padding-bottom: 12px; }
+.hero-side > p:not(.status) { font-size: 18px; color: var(--ink-muted); max-width: 38ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.status { display: inline-flex; align-items: center; gap: 10px; width: fit-content; font-size: 14px; font-weight: 500; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); }
+.status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-muted); }
+.status.is-open .dot { background: var(--open); box-shadow: 0 0 0 4px color-mix(in srgb, var(--open) 18%, transparent); }
+@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+
+/* Strip */
+.strip { background: var(--black); color: var(--beige); overflow: hidden; }
+.strip-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.strip-track ul { display: flex; }
+.strip li { font-family: var(--font-display); font-style: italic; font-size: 20px; padding: 18px 28px; white-space: nowrap; display: flex; align-items: center; }
+.strip li::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--beige-deep); margin-left: 56px; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .strip-track { animation: none; } }
+
+/* Sections */
+section { scroll-margin-top: 72px; }
+.section { padding: clamp(72px, 10vw, 136px) 0; }
+.on-dark { background: var(--black); color: var(--white); }
+.on-beige { background: var(--beige); }
+.section-head { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; margin-bottom: clamp(40px, 6vw, 72px); }
+.section-head h2 { font-size: clamp(40px, 6.5vw, 84px); margin-top: 14px; }
+.section-head p { color: var(--ink-muted); max-width: 46ch; justify-self: end; }
+.on-dark .section-head p { color: var(--on-dark-muted); }
+@media (max-width: 760px) { .section-head { grid-template-columns: 1fr; } .section-head p { justify-self: start; } }
+
+/* Pillars */
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.pillars > div { padding: 32px 32px 0 0; }
+.pillars > div + div { padding-left: 32px; border-left: 1px solid var(--line); }
+.pillars .icon { width: 40px; height: 40px; border: 1px solid var(--black); border-radius: 50%; display: grid; place-items: center; margin-bottom: 36px; }
+.pillars .icon svg { width: 18px; height: 18px; }
+.pillars h3 { font-size: 28px; margin-bottom: 12px; }
+.pillars p { color: var(--ink-muted); }
+@media (max-width: 760px) {
+  .pillars { grid-template-columns: 1fr; }
+  .pillars > div, .pillars > div + div { padding: 28px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .pillars .icon { margin-bottom: 18px; }
+}
+
+/* Menu */
+.menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(32px, 5vw, 64px); }
+.menu-group .group-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid var(--black); }
+.menu-group h3 { font-size: 30px; }
+.menu-group .count { font-size: 13px; color: var(--ink-muted); }
+.item { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.item .name { font-weight: 500; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.item .desc { font-size: 14px; color: var(--ink-muted); margin-top: 3px; }
+.badge { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--black); color: var(--beige); }
+.badge.soft { background: transparent; color: var(--ink-muted); border: 1px solid var(--beige-deep); }
+.menu-note { margin-top: 48px; display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start; padding: 24px 28px; border: 1px solid var(--line); background: var(--white); }
+.menu-note svg { width: 22px; height: 22px; margin-top: 2px; }
+.menu-note p { color: var(--ink-muted); font-size: 15px; }
+.menu-note strong { color: var(--black); font-weight: 600; }
+@media (max-width: 900px) { .menu-grid { grid-template-columns: 1fr; } }
+
+/* Brownie feature */
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.seal { aspect-ratio: 1; width: 100%; max-width: 400px; justify-self: center; border: 1px solid var(--black); border-radius: 50%; display: grid; place-items: center; text-align: center; padding: 14%; position: relative; }
+.seal::before { content: ""; position: absolute; inset: 14px; border: 1px dashed var(--beige-deep); border-radius: 50%; }
+.seal .big { font-family: var(--font-display); font-size: clamp(44px, 6.5vw, 80px); line-height: 1; }
+.seal .big em { font-style: italic; }
+.seal small { display: block; margin-top: 14px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-muted); }
+.feature blockquote { font-family: var(--font-display); font-size: clamp(30px, 4vw, 48px); line-height: 1.15; }
+.feature .meta { display: grid; gap: 18px; }
+.feature .meta > p { color: var(--ink-muted); max-width: 46ch; }
+@media (max-width: 760px) { .feature { grid-template-columns: 1fr; } .seal { max-width: 280px; } }
+
+/* Hours */
+.hours-wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+.hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; border-top: 1px solid var(--white); }
+.hours th, .hours td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--line-dark); font-weight: 400; font-size: 17px; }
+.hours th { font-family: var(--font-display); font-size: 22px; }
+.hours td { text-align: right; color: var(--on-dark-muted); }
+.hours tr.today th, .hours tr.today td { color: var(--beige); }
+.hours tr.today td::before { content: "Today · "; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.hours-side { display: grid; gap: 28px; }
+.big-time { font-family: var(--font-display); font-size: clamp(64px, 9vw, 120px); line-height: .9; color: var(--beige); }
+.big-time small { display: block; font-family: var(--font-body); font-size: 14px; color: var(--on-dark-muted); margin-top: 14px; letter-spacing: .02em; }
+.notes li { padding: 14px 0; border-bottom: 1px solid var(--line-dark); color: var(--on-dark-muted); font-size: 15px; }
+.notes li strong { color: var(--white); font-weight: 500; }
+@media (max-width: 860px) { .hours-wrap { grid-template-columns: 1fr; } }
+
+/* Reviews */
+.ratings { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--black); border-bottom: 1px solid var(--line); margin-bottom: 56px; }
+.rating { padding: 28px 24px 28px 0; }
+.rating + .rating { padding-left: 24px; border-left: 1px solid var(--line); }
+.rating .score { font-family: var(--font-display); font-size: clamp(52px, 6vw, 72px); line-height: 1; }
+.rating .score small { font-size: 22px; color: var(--ink-muted); }
+.stars { display: flex; gap: 3px; margin: 12px 0 8px; }
+.stars svg { width: 14px; height: 14px; }
+.rating p { font-size: 14px; color: var(--ink-muted); }
+.rating a { text-underline-offset: 3px; }
+.quotes { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+.quote { background: var(--white); border: 1px solid var(--line); padding: clamp(28px, 4vw, 44px); display: grid; gap: 24px; align-content: space-between; }
+.quote.lead { grid-row: span 2; background: var(--black); color: var(--white); border-color: var(--black); }
+.quote blockquote { font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); line-height: 1.3; }
+.quote.lead blockquote { font-size: clamp(26px, 3.2vw, 38px); }
+.quote figcaption { font-size: 14px; color: var(--ink-muted); }
+.quote.lead figcaption { color: var(--on-dark-muted); }
+.quote figcaption strong { color: inherit; font-weight: 600; }
+.quote.lead figcaption strong { color: var(--beige); }
+.themes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+.themes li { font-size: 14px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); }
+.disclaimer { margin-top: 24px; font-size: 13px; color: var(--ink-muted); max-width: 70ch; }
+@media (max-width: 760px) {
+  .ratings, .quotes { grid-template-columns: 1fr; }
+  .rating, .rating + .rating { padding: 24px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .quote.lead { grid-row: auto; }
+}
+
+/* Good to know */
+.amenities { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.amenity { background: var(--beige); padding: 28px 22px; display: grid; gap: 18px; align-content: start; }
+.amenity svg { width: 26px; height: 26px; }
+.amenity h3 { font-size: 20px; }
+.amenity p { font-size: 14px; color: var(--ink-muted); }
+@media (max-width: 960px) { .amenities { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .amenities { grid-template-columns: 1fr; } }
+
+/* Visit */
+.visit { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); }
+.visit > div { background: var(--black); padding: clamp(28px, 4vw, 48px); display: grid; gap: 20px; align-content: start; }
+.visit h3 { font-size: 30px; color: var(--beige); }
+.visit address { font-style: normal; color: var(--on-dark-muted); font-size: 18px; }
+.visit .contact a { display: block; font-family: var(--font-display); font-size: clamp(26px, 3vw, 34px); text-decoration: none; padding: 6px 0; }
+.visit .contact a:hover { color: var(--beige); }
+.visit .actions { margin-top: 8px; }
+@media (max-width: 760px) { .visit { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .logo { font-size: 18px; } .nav { gap: 12px; } }
+
+/* CTA + footer */
+.cta { text-align: center; padding: clamp(80px, 12vw, 160px) 0; }
+.cta h2 { font-size: clamp(46px, 9.5vw, 128px); letter-spacing: -.03em; line-height: .95; margin: 18px 0 40px; }
+.cta .actions { justify-content: center; }
+footer { background: var(--black); color: var(--on-dark-muted); font-size: 14px; padding: 40px 0; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center; }
+.foot .logo { color: var(--white); }
+.social a { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line-dark); border-radius: 50%; transition: border-color .2s, color .2s; }
+.social a:hover { border-color: var(--beige); color: var(--beige); }
+.social svg { width: 18px; height: 18px; }
+
+/* Reveal */
+.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.js .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<header class="site-header" id="top">
+  <div class="wrap nav">
+    <a class="logo" href="#top">Grumpy Monkey’s <em>Coffee Nook</em></a>
+    <nav aria-label="Main">
+      <div class="nav-links" id="nav-links">
+        <a href="#menu">Menu</a>
+        <a href="#hours">Hours</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#visit">Visit</a>
+      </div>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-solid nav-cta" href="tel:+61475299855">Call 0475 299 855</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Coffee · Norman Park · Brisbane</p>
+        <h1 id="hero-title">Coffee for the <em>early</em> &amp; the grumpy.</h1>
+      </div>
+      <div class="hero-side">
+        <p class="status" id="status"><span class="dot" aria-hidden="true"></span><span id="status-text">Weekdays from 5am · Weekends from 6am</span></p>
+        <p>A little neighbourhood nook on Hume Street. Great coffee made quickly, a free homebaked brownie with every coffee, and the doors open at 5am for the early risers.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="#menu">See the menu <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Grumpy+Monkey%27s+Coffee+Nook+46+Hume+St+Norman+Park+QLD+4170" target="_blank" rel="noopener">Get directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <ul><li>Open from 5am</li><li>A free brownie with every coffee</li><li>Puppaccinos for the dog</li><li>Bagels &amp; Bircher</li><li>4.7 on Google</li></ul>
+      <ul><li>Open from 5am</li><li>A free brownie with every coffee</li><li>Puppaccinos for the dog</li><li>Bagels &amp; Bircher</li><li>4.7 on Google</li></ul>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">The nook</p>
+          <h2 id="about-title">Small shop.<br><em>Big mornings.</em></h2>
+        </div>
+        <p>A busy local favourite with a friendly crew and a queue that often runs out the door. Regulars drive past other cafés to get their coffee here.</p>
+      </div>
+      <div class="pillars reveal">
+        <div>
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3>Up before you</h3>
+          <p>Open at 5am on weekdays and 6am on weekends, every day of the year except Christmas Day and New Year’s Day.</p>
+        </div>
+        <div>
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="7" width="16" height="10" rx="1"/><path d="M4 12h16M12 7v10"/></svg></span>
+          <h3>A brownie, on us</h3>
+          <p>Every coffee comes with a small piece of homebaked brownie. It’s the thing guests mention most.</p>
+        </div>
+        <div>
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="9" r="2"/><circle cx="17" cy="9" r="2"/><circle cx="10" cy="5" r="1.6"/><circle cx="14" cy="5" r="1.6"/><path d="M8 17c0-3 2-5 4-5s4 2 4 5c0 1.5-1.5 2-4 2s-4-.5-4-2z"/></svg></span>
+          <h3>Dogs welcome</h3>
+          <p>Pet friendly, with puppaccinos and dog biscuits for your four-legged regular.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-beige" id="menu" aria-labelledby="menu-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Eat &amp; drink</p>
+          <h2 id="menu-title">The <em>menu</em>.</h2>
+        </div>
+        <p>Espresso coffee, iced drinks and teas, with simple breakfast food and homebaked treats. Everything is available to take away.</p>
+      </div>
+      <div class="menu-grid reveal">
+        <div class="menu-group">
+          <div class="group-head"><h3>Coffee &amp; drinks</h3></div>
+          <ul>
+            <li class="item"><p class="name">Espresso coffee <span class="badge">Free brownie</span></p><p class="desc">Great coffee, made quickly, every time</p></li>
+            <li class="item"><p class="name">Iced coffee</p><p class="desc">For the warm Brisbane mornings</p></li>
+            <li class="item"><p class="name">Tea</p><p class="desc">A selection of teas</p></li>
+            <li class="item"><p class="name">Smoothies</p></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <div class="group-head"><h3>Food</h3></div>
+          <ul>
+            <li class="item"><p class="name">Bagels</p><p class="desc">A guest favourite for breakfast on the go</p></li>
+            <li class="item"><p class="name">Bircher muesli</p><p class="desc">Another regulars’ favourite</p></li>
+            <li class="item"><p class="name">Avocado toast</p></li>
+            <li class="item"><p class="name">Wraps</p></li>
+            <li class="item"><p class="name">Brownies &amp; slices <span class="badge soft">Homebaked</span></p><p class="desc">Slices from around $9</p></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <div class="group-head"><h3>For the dog</h3></div>
+          <ul>
+            <li class="item"><p class="name">Puppaccino</p><p class="desc">A little cup of froth for your dog</p></li>
+            <li class="item"><p class="name">Dog biscuits</p><p class="desc">To enjoy with the puppaccino</p></li>
+          </ul>
+        </div>
+      </div>
+      <div class="menu-note reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>
+        <p><strong>Prices and daily specials are at the counter.</strong> Expect around $40 for two people having food and a drink each. For today’s range, call <a href="tel:+61475299855">0475 299 855</a> or check <a href="https://www.facebook.com/GrumpyMonkeysCoffeeNook/" target="_blank" rel="noopener">Facebook</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="brownie-title">
+    <div class="wrap feature">
+      <div class="seal reveal" aria-hidden="true">
+        <div><span class="big">Free <em>brownie</em></span><small>With every coffee</small></div>
+      </div>
+      <div class="meta reveal">
+        <p class="eyebrow">House tradition</p>
+        <h2 id="brownie-title" class="sr-only">A free brownie with every coffee</h2>
+        <blockquote>Every coffee comes with a little piece of <em>homebaked</em> brownie.</blockquote>
+        <p>It’s on the house, every time. One reviewer says it’s what won them over.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark" id="hours" aria-labelledby="hours-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Opening hours</p>
+          <h2 id="hours-title">Early <em>doors</em>.</h2>
+        </div>
+        <p>Open seven days, mornings only. Get in before noon.</p>
+      </div>
+      <div class="hours-wrap reveal">
+        <table class="hours" id="hours-table">
+          <caption class="sr-only">Opening hours</caption>
+          <tbody>
+            <tr data-day="1"><th scope="row">Monday</th><td>5am – 12pm</td></tr>
+            <tr data-day="2"><th scope="row">Tuesday</th><td>5am – 12pm</td></tr>
+            <tr data-day="3"><th scope="row">Wednesday</th><td>5am – 12pm</td></tr>
+            <tr data-day="4"><th scope="row">Thursday</th><td>5am – 12pm</td></tr>
+            <tr data-day="5"><th scope="row">Friday</th><td>5am – 12pm</td></tr>
+            <tr data-day="6"><th scope="row">Saturday</th><td>6am – 12pm</td></tr>
+            <tr data-day="0"><th scope="row">Sunday</th><td>6am – 12pm</td></tr>
+          </tbody>
+        </table>
+        <div class="hours-side">
+          <p class="big-time">5:00<small>The first coffee of the day, Monday to Friday.</small></p>
+          <ul class="notes">
+            <li><strong>Closed</strong> on Christmas Day and New Year’s Day.</li>
+            <li><strong>Boxing Day:</strong> open for takeaway.</li>
+            <li>Holiday hours can change, so check Facebook or call ahead.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reviews" aria-labelledby="reviews-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">What locals say</p>
+          <h2 id="reviews-title">The <em>reviews</em>.</h2>
+        </div>
+        <p>Hundreds of reviews, and the same things keep coming up: the coffee, the speed, the brownie and the people.</p>
+      </div>
+      <div class="ratings reveal">
+        <div class="rating">
+          <p class="score">4.7<small> / 5</small></p>
+          <div class="stars" aria-hidden="true"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div>
+          <p>352 Google reviews</p>
+        </div>
+        <div class="rating">
+          <p class="score">4.8<small> / 5</small></p>
+          <div class="stars" aria-hidden="true"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div>
+          <p>About 400 reviews · <a href="https://restaurantguru.com/Grumpy-Monkeys-Coffee-Nook-Norman-Park" target="_blank" rel="noopener">Restaurant Guru</a></p>
+        </div>
+        <div class="rating">
+          <p class="score">5.0<small> / 5</small></p>
+          <div class="stars" aria-hidden="true"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div>
+          <p>2 reviews · <a href="https://www.tripadvisor.com.au/Restaurant_Review-g255068-d26843958-Reviews-Grumpy_Monkey_s_Coffee_Nook-Brisbane_Brisbane_Region_Queensland.html" target="_blank" rel="noopener">Tripadvisor</a></p>
+        </div>
+      </div>
+      <div class="quotes reveal">
+        <figure class="quote lead">
+          <blockquote>“Open at 5am for all of us early risers, a free homebaked brownie with every coffee, delicious bagels and Bircher. They even have Dog Biscuits to enjoy with a Puppacinno. Oh, and everyone is super-friendly. THE BEST!”</blockquote>
+          <figcaption><strong>Andrew</strong> · Love My Cafe</figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“Amazing coffee every time and super quick.”</blockquote>
+          <figcaption><strong>Martine</strong> · Love My Cafe</figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“Great coffee and good local atmosphere.”</blockquote>
+          <figcaption><strong>Andrew</strong> · Love My Cafe</figcaption>
+        </figure>
+      </div>
+      <ul class="themes reveal" aria-label="Common review themes">
+        <li>Consistently great coffee</li><li>Fast service</li><li>Friendly staff</li><li>Free brownie</li><li>Family friendly</li><li>Worth the queue</li>
+      </ul>
+      <p class="disclaimer">Google rating as of October 2026. Quotes are from guest reviews on <a href="https://lovemycafe.com.au/brisbane/grumpy-monkeys-coffee-nook/" target="_blank" rel="noopener">Love My Cafe</a>.</p>
+    </div>
+  </section>
+
+  <section class="section on-beige" aria-labelledby="know-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Good to know</p>
+          <h2 id="know-title">Everyone’s <em>welcome</em>.</h2>
+        </div>
+        <p>Bring the kids, the dog and the pram.</p>
+      </div>
+      <div class="amenities reveal">
+        <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 8h12l-1.5 12h-9z"/><path d="M9 8V5h6v3"/></svg><h3>Takeaway</h3><p>Everything is available to go.</p></div>
+        <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="9" cy="5" r="2"/><path d="M9 8v6h6l2 5M9 11h5"/><path d="M13 19a5 5 0 1 1-6-7"/></svg><h3>Accessible</h3><p>Wheelchair accessible.</p></div>
+        <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M6 21v-5a6 6 0 0 1 12 0v5"/></svg><h3>Kids welcome</h3><p>Child friendly, with high chairs.</p></div>
+        <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="9" r="2"/><circle cx="17" cy="9" r="2"/><circle cx="10" cy="5" r="1.6"/><circle cx="14" cy="5" r="1.6"/><path d="M8 17c0-3 2-5 4-5s4 2 4 5c0 1.5-1.5 2-4 2s-4-.5-4-2z"/></svg><h3>Pet friendly</h3><p>Puppaccinos and dog biscuits.</p></div>
+        <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>Early opening</h3><p>From 5am on weekdays.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark" id="visit" aria-labelledby="visit-title">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="eyebrow">Find us</p>
+          <h2 id="visit-title">Come <em>visit</em>.</h2>
+        </div>
+        <p>On Hume Street in Norman Park, in Brisbane’s inner east.</p>
+      </div>
+      <div class="visit reveal">
+        <div>
+          <h3>Address</h3>
+          <address>Shop 2, 46 Hume Street<br>Norman Park QLD 4170</address>
+          <div class="actions">
+            <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&amp;query=Grumpy+Monkey%27s+Coffee+Nook+46+Hume+St+Norman+Park+QLD+4170" target="_blank" rel="noopener">Get directions <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h3>Get in touch</h3>
+          <div class="contact">
+            <a href="tel:+61475299855">0475 299 855</a>
+            <a href="https://www.facebook.com/GrumpyMonkeysCoffeeNook/" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <p class="eyebrow">See you in the morning</p>
+      <h2 id="cta-title">Less grumpy, <em>one cup</em> at a time.</h2>
+      <div class="actions">
+        <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&amp;query=Grumpy+Monkey%27s+Coffee+Nook+46+Hume+St+Norman+Park+QLD+4170" target="_blank" rel="noopener">Get directions</a>
+        <a class="btn btn-ghost" href="tel:+61475299855">Call the nook</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#top">Grumpy Monkey’s <em>Coffee Nook</em></a>
+    <span>Shop 2, 46 Hume Street, Norman Park QLD 4170</span>
+    <div class="social">
+      <a href="https://www.facebook.com/GrumpyMonkeysCoffeeNook/" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  document.body.classList.add('js');
+
+  var header = document.querySelector('.site-header');
+  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  var toggle = document.querySelector('.menu-toggle');
+  var links = document.getElementById('nav-links');
+  function setNav(open) {
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  toggle.addEventListener('click', function () { setNav(toggle.getAttribute('aria-expanded') !== 'true'); });
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) setNav(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setNav(false); });
+
+  // Open now, in Brisbane time (no daylight saving). Mon–Fri 5–12, Sat–Sun 6–12.
+  try {
+    var parts = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Brisbane', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+    var get = function (t) { return (parts.find(function (p) { return p.type === t; }) || {}).value; };
+    var day = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[get('weekday')];
+    var mins = parseInt(get('hour'), 10) * 60 + parseInt(get('minute'), 10);
+    var openAt = function (d) { return (d === 0 || d === 6) ? 360 : 300; };
+    var label = function (d) { return (d === 0 || d === 6) ? '6am' : '5am'; };
+    var status = document.getElementById('status');
+    var text = document.getElementById('status-text');
+    if (mins >= openAt(day) && mins < 720) {
+      status.classList.add('is-open');
+      text.textContent = 'Open now · until 12pm';
+    } else if (mins < openAt(day)) {
+      text.textContent = 'Closed · opens today at ' + label(day);
+    } else {
+      var next = (day + 1) % 7;
+      text.textContent = 'Closed · opens tomorrow at ' + label(next);
+    }
+    var row = document.querySelector('#hours-table tr[data-day="' + day + '"]');
+    if (row) row.classList.add('today');
+  } catch (e) {}
+
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  } else { els.forEach(function (el) { el.classList.add('in'); }); }
+})();
+</script>
+</body>
+</html>
